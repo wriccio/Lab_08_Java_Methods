@@ -4,10 +4,13 @@ public class DevTest {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        int number = SafeInput.getRangedInt(
-                in, "Enter a number", 1, 10);
+        String result = SafeInput.getRegExString(
+                in,
+                "Enter exactly five digits",
+                "\\d{5}"
+        );
 
-        System.out.println("Your number is: " + number);
+        System.out.println("Your input is: " + result);
 
         in.close();
     }

@@ -114,4 +114,93 @@ public class SafeInput {
 
         return retVal;
     }
+    /**
+     * Get a double within an inclusive range.
+     *
+     * @param pipe Scanner instance to read input
+     * @param prompt input prompt message
+     * @param low lowest acceptable value
+     * @param high highest acceptable value
+     * @return a double within the specified range
+     */
+    public static double getRangedDouble(Scanner pipe, String prompt, double low, double high) {
+        double retVal = 0.0;
+        String trash = "";
+        boolean done = false;
+
+        do {
+            System.out.print("\n" + prompt + " [" + low + " - " + high + "]: ");
+
+            if (pipe.hasNextDouble()) {
+                retVal = pipe.nextDouble();
+                pipe.nextLine();
+
+                if (retVal >= low && retVal <= high) {
+                    done = true;
+                } else {
+                    System.out.println("You must enter a number between "
+                            + low + " and " + high + ".");
+                }
+            } else {
+                trash = pipe.nextLine();
+                System.out.println("You must enter a double: " + trash);
+            }
+
+        } while (!done);
+
+        return retVal;
+    }
+    /**
+     * Get a yes or no confirmation.
+     *
+     * @param pipe Scanner instance to read input
+     * @param prompt input prompt message
+     * @return true for yes, false for no
+     */
+    public static boolean getYNConfirm(Scanner pipe, String prompt) {
+        String response = "";
+
+        do {
+            System.out.print("\n" + prompt + " [Y/N]: ");
+            response = pipe.nextLine();
+
+            if (response.equalsIgnoreCase("Y")) {
+                return true;
+            } else if (response.equalsIgnoreCase("N")) {
+                return false;
+            } else {
+                System.out.println("You must enter Y or N.");
+            }
+
+        } while (true);
+    }
+    /**
+     * Get a string that matches a RegEx pattern.
+     *
+     * @param pipe Scanner instance to read input
+     * @param prompt prompt for the user
+     * @param regExPattern pattern used to constrain the input
+     * @return a String that matches the supplied pattern
+     */
+    public static String getRegExString(Scanner pipe, String prompt, String regExPattern) {
+        String response = "";
+        boolean gotAVal = false;
+
+        do {
+            System.out.print("\n" + prompt + ": ");
+            response = pipe.nextLine();
+
+            if (response.matches(regExPattern)) {
+                gotAVal = true;
+            } else {
+                System.out.println("\n" + response
+                        + " must match the pattern " + regExPattern);
+                System.out.println("Try again!");
+            }
+
+        } while (!gotAVal);
+
+        return response;
+    }
 }
+
